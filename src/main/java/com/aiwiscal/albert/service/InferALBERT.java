@@ -13,6 +13,7 @@ import org.tensorflow.Tensor;
 /**
  * @author wenhan
  * @create 2020-03-21-14:03
+ * 核心ALBERT推理类
  */
 @Service
 public class InferALBERT {
@@ -44,21 +45,26 @@ public class InferALBERT {
         outputVector.setSuccess(false);
         outputVector.setRawText(inputText.getText());
         outputVector.setRawValidLength(inputText.getValidLength());
+        long tic = System.currentTimeMillis();
         try{
             OutputToken outputToken = tokenizer.tokenize(inputText);
+            logger.info("Raw Input: Text - \"{}\", ValidLength - {} ", inputText.getText(), inputText.getValidLength());
             outputVector.setText(outputToken.getInputTextValid().getText());
             outputVector.setValidLength(outputToken.getInputTextValid().getValidLength());
+            logger.info("Validated Input: Text - \"{}\", ValidLength - {} ", outputVector.getText(), outputVector.getValidLength());
             float[] result = inferArr(outputToken.getTokenId(), outputToken.getSegmentId());
             outputVector.setVector(result);
             if(outputToken.isSuccess()){
                 outputVector.setSuccess(true);
-                logger.info("ALBERT inference finished ...");
+                logger.debug("ALBERT inference finished ... ");
             }else {
                 logger.warn("ALBERT inference finished BUT errors occurred in tokenizer, the vector may be invalid ...");
             }
         }catch (Exception e){
             logger.error("Failed to infer ALBERT - {} ", e.toString());
         }
+        long toc = System.currentTimeMillis();
+        logger.info("ALBERT vector generation finished - time cost: {} ms. ", toc-tic);
         return outputVector;
     }
 }

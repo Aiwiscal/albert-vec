@@ -14,6 +14,7 @@ import java.io.InputStream;
 /**
  * @author wenhan
  * @create 2020-03-21-11:40
+ * 自动加载albert tensorflow模型
  */
 @Getter
 @Component("loadALBERT")
@@ -26,6 +27,10 @@ public class LoadALBERT {
 
     private final int maxSupportLen = 510;
 
+    private final String modelPath = "albert-model/albert_tiny_zh_google.pb";
+
+
+
     @PostConstruct
     private void init(){
         loadGraph();
@@ -34,13 +39,14 @@ public class LoadALBERT {
     private void loadGraph(){
         Graph graph = new Graph();
         try{
-            InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("albert-model/albert_tiny_zh_google.pb");
+            InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(modelPath);
             byte[] graphPb = IOUtils.toByteArray(inputStream);
             graph.importGraphDef(graphPb);
             this.session = new Session(graph);
-            logger.info("ALBERT checkpoint loaded.");
+            logger.info("ALBERT checkpoint loaded @ {}, vector dimension - {}, maxSupportLen - {}",
+                    modelPath, vectorDim, maxSupportLen);
         } catch (Exception e){
-            logger.error("Failed to load ALBERT checkpoint! - {}", e.toString());
+            logger.error("Failed to load ALBERT checkpoint @ {} ! - {}", modelPath, e.toString());
         }
     }
 }

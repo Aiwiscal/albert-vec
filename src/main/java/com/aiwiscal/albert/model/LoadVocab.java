@@ -15,6 +15,7 @@ import java.util.Map;
 /**
  * @author wenhan
  * @create 2020-03-21-15:10
+ * 自动加载albert词表
  */
 @Getter
 @Component("loadVocab")
@@ -42,9 +43,9 @@ public class LoadVocab {
             }
             bf.close();
             inputReader.close();
-            logger.info("albert vocab loaded. total number: {} ", n);
+            logger.info("ALBERT vocab loaded. total number - {} ", n);
         }catch (Exception e){
-            logger.error("failed to load vocab! - {}", e.toString());
+            logger.error("failed to load ALBERT vocab! - {}", e.toString());
         }
     }
 }

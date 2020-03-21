@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 /**
  * @author wenhan
  * @create 2020-03-21-14:24
+ * 启动简易自检
  */
 @Component("servicePass")
 public class ServicePass implements CommandLineRunner {
@@ -37,16 +38,18 @@ public class ServicePass implements CommandLineRunner {
 
     private void inferArrPass(){
         try{
-            InputText inputText = new InputText("今 天下午下 雨了。      ", 3);
+            InputText inputText = new InputText("你好 世 界， 世界你好!", 5);
             OutputToken outputToken = tokenizer.tokenize(inputText);
 
-            logger.info("tokenize() passed ...");
+            logger.debug("tokenize() passed ...");
 
             OutputVector outputVector = inferALBERT.infer(inputText);
-            logger.info("infer() passed ...");
+            logger.debug("infer() passed ...");
+
+            logger.info("ALBERT Vector Service is ready to listen ...");
 
         }catch (Exception e){
-            logger.error("failed to pass inferArr() ... ");
+            logger.error("failed to run ServicePass - {} ", e.toString());
         }
 
 

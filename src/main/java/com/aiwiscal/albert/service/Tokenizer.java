@@ -15,6 +15,8 @@ import java.util.Map;
 /**
  * @author wenhan
  * @create 2020-03-21-15:09
+ * 简易分词器，获得输入文本的tokenId和segmentId
+ * 注意：当前仅支持中文！
  */
 @Component("tokenizer")
 public class Tokenizer {
@@ -36,9 +38,9 @@ public class Tokenizer {
             outputToken.setSegmentId(segmentId);
             outputToken.setSuccess(true);
             outputToken.setInputTextValid(inputTextValid);
-            logger.info("Text tokenized...");
+            logger.debug("Text tokenized ...");
         }catch (Exception e){
-            logger.info("Failed to tokenize the text - {}", e.toString());
+            logger.error("Failed to tokenize the text - {}", e.toString());
             outputToken.setSuccess(false);
         }
         return outputToken;
