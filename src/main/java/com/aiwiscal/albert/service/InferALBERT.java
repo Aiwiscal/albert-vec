@@ -43,6 +43,9 @@ public class InferALBERT {
     public OutputVector infer(InputText inputText){
         OutputVector outputVector = new OutputVector();
         outputVector.setSuccess(false);
+        if(inputText == null){
+            return outputVector;
+        }
         outputVector.setRawText(inputText.getText());
         outputVector.setRawValidLength(inputText.getValidLength());
         long tic = System.currentTimeMillis();
