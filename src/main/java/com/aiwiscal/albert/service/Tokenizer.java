@@ -70,7 +70,7 @@ public class Tokenizer {
         String text = inputText.getText();
         text = text.replaceAll("\\pZ", "");
         int validLength = inputText.getValidLength();
-        if(validLength == -1){
+        if(validLength < 0){
             validLength = text.length();
         }else {
             validLength = Math.min(loadALBERT.getMaxSupportLen(), validLength);
