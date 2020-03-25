@@ -44,7 +44,15 @@ public class InferALBERT {
         OutputVector outputVector = new OutputVector();
         outputVector.setSuccess(false);
         if(inputText == null){
+            logger.warn("get NULL inputText, return default outputVector object.");
             return outputVector;
+        }
+        if(inputText.getText() == null || inputText.getText().length() == 0){
+            logger.warn("get NULL or empty text in inputText, return default outputVector object.");
+            return outputVector;
+        }
+        if(inputText.getValidLength() == 0){
+            logger.warn("the input validLength equals to 0, return default outputVector object.");
         }
         outputVector.setRawText(inputText.getText());
         outputVector.setRawValidLength(inputText.getValidLength());
