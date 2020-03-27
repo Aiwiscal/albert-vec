@@ -41,8 +41,11 @@ public class LoadALBERT {
         try{
             // 获取资源文件中的模型文件inputStream
             InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(modelPath);
+            // 使用commons-io中的IOUtils将模型文件输入流转化为byte数组
             byte[] graphPb = IOUtils.toByteArray(inputStream);
+            //初始化TensorFlow graph
             graph.importGraphDef(graphPb);
+            // 把graph装入一个新的Session，可运行推理
             this.session = new Session(graph);
             logger.info("ALBERT checkpoint loaded @ {}, vector dimension - {}, maxSupportLen - {}",
                     modelPath, vectorDim, maxSupportLen);
