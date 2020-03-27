@@ -33,12 +33,13 @@ public class LoadALBERT {
 
     @PostConstruct
     private void init(){
-        loadGraph();
+        loadGraph();  // 调用加载方法
     }
 
     private void loadGraph(){
         Graph graph = new Graph();
         try{
+            // 获取资源文件中的模型文件inputStream
             InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(modelPath);
             byte[] graphPb = IOUtils.toByteArray(inputStream);
             graph.importGraphDef(graphPb);
