@@ -22,7 +22,7 @@ public class AlbertVecController {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private InferALBERT inferALBERT;
+    private InferALBERT inferALBERT; // 注入核心推理类Service
 
     @Value("${server.port}")
     private int port;
@@ -32,7 +32,7 @@ public class AlbertVecController {
         return String.format("======== ALBERT Vector Service is running @ port %d =======", this.port);
     }
 
-    @PostMapping(path="/vector")
+    @PostMapping(path="/vector") //处理post向量生成请求
     public OutputVector getVector(@RequestBody InputText inputText){
         return inferALBERT.infer(inputText);
     }

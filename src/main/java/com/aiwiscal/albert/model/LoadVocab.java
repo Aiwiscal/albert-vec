@@ -36,6 +36,7 @@ public class LoadVocab {
             BufferedReader bf = new BufferedReader(inputReader);
             String str;
             int n = 0;
+            // 按行读，分配id
             while ((str = bf.readLine()) != null) {
                 String lineWord = str.trim();
                 this.vocabTable.put(lineWord, n);
